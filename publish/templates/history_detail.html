@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style>
+    .detail-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.detail-image {
+    width: 100%;
+    height: auto;
+}
+
+.detail-title {
+    margin-top: 0;
+    color: #333;
+}
+
+.detail-meta {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.detail-content {
+    margin-top: 20px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-link:hover {
+    background-color: #0056b3;
+}
+
+</style>
+<div class="detail-container">
+    <h2 class="detail-title">{{ news.title }}</h2>
+    {% if news.image %}
+    <img src="{{ news.image.url }}" alt="{{ news.title }}" class="detail-image">
+    {% endif %}
+    <p class="detail-meta">Created by: {{ news.created_by.get_full_name }} | Published on: {{ news.created_at|date:"d M Y H:i" }}</p>
+    <p class="detail-content">{{ news.description }}</p>
+    <a href="/" class="back-link">Вернуться на главную</a>
+</div>
+{% endblock %}

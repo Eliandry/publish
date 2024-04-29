@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style>
+.news-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0;
+    list-style: none;
+}
+
+.news-item {
+    flex: 0 1 31%; /* Позволяет разместить ровно 3 элемента в строке с небольшим пространством между ними */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Обеспечивает растягивание содержимого так, чтобы кнопка всегда была внизу */
+    padding: 10px;
+}
+
+.news-title {
+    margin-top: 0;
+}
+
+.news-date {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.news-link {
+    align-self: stretch; /* Растягивает кнопку на всю ширину родителя */
+    text-align: center;
+    background-color: #FF0000; /* Красный цвет кнопок */
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+    margin-top: auto; /* Выравнивает кнопки по нижнему краю */
+}
+
+.news-link:hover {
+    background-color: #CC0000;
+}
+</style>
+<h2>Все Статьи</h2>
+<ul class="news-list">
+    {% for item in news %}
+    <li class="news-item">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" alt="{{ item.title }}" class="news-image">
+        {% endif %}
+        <div class="news-content">
+            <h3 class="news-title">{{ item.title }}</h3>
+            <p class="news-date">{{ item.created_at|date:"d M Y" }}</p>
+            <p>{{ item.content|truncatewords:20 }}</p>
+            <a href="{% url 'article_detail' pk=item.pk %}" class="news-link">Читать полностью</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style>
+    .terms-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.terms-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.terms-list li strong {
+    color: #333;
+}
+</style>
+<h2>Все термины</h2>
+<ul class="terms-list">
+    {% for term in terms %}
+    <li>
+        <strong>{{ term.name }}</strong> - {{ term.description }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

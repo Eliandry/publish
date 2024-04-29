@@ -1,0 +1,119 @@
+{% extends "index.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 20px;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    h1, h2 {
+        color: #333;
+    }
+    section {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    .content-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .content-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    li {
+        margin: 10px;
+        width: 30%; /* Измените это значение в зависимости от предпочтительной ширины */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    p {
+        margin: 5px 0;
+    }
+</style>
+
+
+    <section>
+        <h2>Термины</h2>
+        <ul>
+            {% for term in terms %}
+                <li>{{ term.name }}: {{ term.description }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'terms' %}">Открыть все термины</a>
+    </section>
+
+    <section>
+    <h2>Последние новости</h2>
+    <ul>
+        {% for news_item in news %}
+            <li class="content-item">
+                {% if news_item.image %}
+                    <img class="content-image" src="{{ news_item.image.url }}" alt="{{ news_item.title }}">
+                {% endif %}
+                <strong>{{ news_item.title }}</strong>
+                <p>{{ news_item.content|truncatewords:20 }}</p>
+                <a href="{% url 'news_detail' pk=news_item.pk %}">Читать полностью</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'news_list' %}">Открыть все новости</a>
+</section>
+
+<section>
+    <h2>Новые статьи</h2>
+    <ul>
+        {% for article in articles %}
+            <li class="content-item">
+                {% if article.image %}
+                    <img class="content-image" src="{{ article.image.url }}" alt="{{ article.title }}">
+                {% endif %}
+                <strong>{{ article.title }}</strong>
+                <p>{{ article.content|truncatewords:20 }}</p>
+                <a href="{% url 'article_detail' pk=article.pk %}">Читать полностью</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'article_list' %}">Открыть все статьи</a>
+</section>
+
+    <section>
+        <h2>Исторические события</h2>
+        <ul>
+        {% for article in historical_events %}
+            <li class="content-item">
+                {% if article.image %}
+                    <img class="content-image" src="{{ article.image.url }}" alt="{{ article.title }}">
+                {% endif %}
+                <strong>{{ article.title }}</strong>
+                <p>{{ article.content|truncatewords:20 }}</p>
+                <a href="{% url 'history_detail' pk=article.pk %}">Читать полностью</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'history_list' %}">Открыть все</a>
+    </section>
+{% endblock %}
